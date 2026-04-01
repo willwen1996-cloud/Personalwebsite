@@ -56,7 +56,7 @@ export default function Home() {
               </div>
               
               <p className="text-lg text-muted-foreground max-w-md leading-relaxed">
-                一位热爱研究与分享的数字化领域分析师。专注于企业战略与数字化场景落地，
+                一位热爱研究与分享的数字世界分析师。专注于企业战略与数字化场景落地，
                 致力于打造丰富而有深度的数字品牌。
               </p>
 
@@ -112,7 +112,7 @@ export default function Home() {
             </div>
             <div className="lg:col-span-8 space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                一名对世界具有好奇心的央企数字化先锋，对任何好玩的产品抱有好奇心，具有超过5年的数字化战略咨询、to B软件产品实施经验。
+                一名对世界具有好奇心的央企数字化先锋，持续热爱任何有趣的人和事，具有超过5年的数字化战略咨询、to B软件产品实施经验。
                 我相信科技能推动实现社会主义现代化理想，并有助于在将来实现共产。
                 我致力于将复杂的社会现象和企业问题转化为精确、有效、前瞻性的解决方案。
               </p>
