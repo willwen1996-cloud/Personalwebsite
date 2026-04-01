@@ -268,7 +268,7 @@ export default function Home() {
             <a href="https://github.com/willwen1996-cloud" className="text-muted-foreground hover:text-foreground transition-colors">
               <Github className="w-5 h-5" />
             </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+            <a href="https://linkedin.com/in/willwen1996" className="text-muted-foreground hover:text-foreground transition-colors">
               <Linkedin className="w-5 h-5" />
             </a>
           </div>
