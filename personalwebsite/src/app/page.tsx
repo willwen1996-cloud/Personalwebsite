@@ -29,7 +29,7 @@ export default function Home() {
             <button onClick={() => scrollToSection('education')} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               教育
             </button>
-            <a href="will.wen1996@gmail.com" className="text-sm text-background bg-foreground px-4 py-2 rounded-sm hover:bg-foreground/90 transition-colors">
+            <a href="mailto:will.wen1996@gmail.com" className="text-sm text-background bg-foreground px-4 py-2 rounded-sm hover:bg-foreground/90 transition-colors">
               联系我
             </a>
           </div>
@@ -256,7 +256,7 @@ export default function Home() {
           
           <div className="flex items-center justify-center gap-6">
             <a 
-              href="will.wen1996@gmail.com" 
+              href="mailto:will.wen1996@gmail.com" 
               className="flex items-center gap-2 text-background bg-foreground px-6 py-3 rounded-sm hover:bg-foreground/90 transition-colors"
             >
               <Mail className="w-4 h-4" />
@@ -265,7 +265,7 @@ export default function Home() {
           </div>
 
           <div className="flex items-center justify-center gap-8 mt-12">
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+            <a href="https://github.com/willwen1996-cloud" className="text-muted-foreground hover:text-foreground transition-colors">
               <Github className="w-5 h-5" />
             </a>
             <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
