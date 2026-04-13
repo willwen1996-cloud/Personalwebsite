@@ -67,8 +67,10 @@
 - **基础信息**：姓名、标题、描述
 - **首屏 Hero**：欢迎语、个人介绍、数据统计、个人照片
 - **关于我**：个人简介、专业技能、兴趣爱好
+- **瞎聊几句**：文章列表（标题、摘要、内容、发布时间、标签、来源）
 - **个人履历**：工作经历列表（时间、职位、公司、描述）
 - **教育背景**：教育经历列表（时间、学位、学校、描述）
+- **生活 Vlog**：生活记录卡片（支持图片、视频、链接）
 - **联系方式**：邮箱、社交媒体链接
 - **页脚**：版权信息、个人格言
 
@@ -86,6 +88,109 @@ hero: {
 }
 ```
 
+### 示例：修改生活 Vlog
+```typescript
+vlog: {
+  title: "生活 Vlog",
+  subtitle: "记录美好瞬间",
+  items: [
+    {
+      type: "image",  // 类型：image（图片） | video（视频） | link（链接）
+      title: "周末的咖啡时光",
+      description: "在阳光明媚的午后，享受一杯手冲咖啡",
+      media: "https://...",  // 图片/视频地址
+      link: "",  // 如果是链接类型，填写链接地址
+      rotation: -3  // 卡片倾斜角度（-10 到 10，创造俏皮感）
+    }
+  ]
+}
+```
+
+### 生活 Vlog 说明
+- **图片类型**：直接填写图片 URL 或本地路径（如 `/photo.jpg`）
+- **视频类型**：填写视频 URL，会自动播放
+- **链接类型**：填写自媒体博文链接，会显示链接预览
+- **倾斜角度**：建议在 -5 到 5 之间，创造随意感
+- **悬停效果**：鼠标悬停会放大卡片并显示标题描述
+
+### 瞎聊几句（文章模块）说明
+- **文章类型**：支持转载小红书、知乎等平台的长文章
+- **文章结构**：
+  - `id`: 文章唯一标识（用于路由）
+  - `title`: 文章标题
+  - `summary`: 文章摘要（首页卡片显示）
+  - `content`: 文章正文（支持 Markdown 格式，**加粗**等）
+  - `publishTime`: 发布时间
+  - `tags`: 文章标签数组
+  - `source`: 来源平台（如"知乎"、"小红书"）
+  - `sourceLink`: 原文链接
+- **页面路由**：
+  - 首页展示前 4 篇文章卡片
+  - 点击"查看更多"进入列表页（`/articles`）
+  - 点击文章卡片进入详情页（`/articles/[id]`）
+- **列表页展示**：标题、发布时间、主题标签三列
+- **详情页展示**：完整文章内容、标签、来源链接
+
+## 文章管理系统
+
+### 系统架构
+文章管理系统采用前后端分离架构，支持在线编辑、发布和管理文章内容。
+
+### 技术实现
+- **数据库**: Supabase (PostgreSQL)
+- **API 接口**: Next.js API Routes
+- **前端界面**: React + shadcn/ui
+- **编辑器**: Markdown 编辑器，支持实时预览和自动排版
+
+### 数据库表结构
+```sql
+CREATE TABLE articles (
+  id SERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  summary TEXT,
+  content TEXT,
+  publish_time DATE,
+  tags TEXT[],
+  source TEXT,
+  source_link TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+### API 接口
+- **后台管理接口** (`/api/admin/articles`)
+  - `GET /api/admin/articles` - 获取文章列表（支持分页）
+  - `POST /api/admin/articles` - 创建新文章
+  - `GET /api/admin/articles/[id]` - 获取单篇文章
+  - `PUT /api/admin/articles/[id]` - 更新文章
+  - `DELETE /api/admin/articles/[id]` - 删除文章
+
+- **前台展示接口** (`/api/articles`)
+  - `GET /api/articles` - 获取文章列表（支持分页）
+  - `GET /api/articles/[id]` - 获取单篇文章详情
+
+### 后台管理页面
+- **文章列表**: `/admin/articles` - 查看所有文章，支持新建、编辑、删除
+- **新建文章**: `/admin/articles/new` - Markdown 编辑器，支持实时预览和自动排版
+- **编辑文章**: `/admin/articles/[id]` - 编辑已有文章
+
+### 自动排版功能
+编辑器内置自动排版功能，可一键优化 Markdown 格式：
+- 统一换行符（CRLF → LF）
+- 优化段落间距（避免过多或过少的空行）
+- 标题前后自动添加空行
+- 列表项自动格式化
+- 代码块自动格式化
+
+### 使用说明
+1. 访问 `/admin/articles` 进入后台管理
+2. 点击"新建文章"创建新文章
+3. 填写标题、摘要、内容等信息
+4. 使用"自动排版"按钮优化格式
+5. 点击"预览"查看效果
+6. 点击"保存"发布文章
+
 ## 环境变量说明
 
 项目运行在云端沙箱环境，以下环境变量已预置：
@@ -93,5 +198,7 @@ hero: {
 - `COZE_PROJECT_DOMAIN_DEFAULT`：对外访问域名
 - `DEPLOY_RUN_PORT`：服务监听端口（5000）
 - `COZE_PROJECT_ENV`：环境标识（DEV/PROD）
+- `SUPABASE_URL`：Supabase 项目地址
+- `SUPABASE_ANON_KEY`：Supabase 公开密钥
 
 

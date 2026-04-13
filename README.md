@@ -1,86 +1,53 @@
-# 清蒸椰子鸡的个人网站
+# projects
 
-这是一个基于 [Next.js 16](https://nextjs.org) + [shadcn/ui](https://ui.shadcn.com) 的现代化个人网站项目。
+这是一个基于 [Next.js 16](https://nextjs.org) + [shadcn/ui](https://ui.shadcn.com) 的全栈应用项目，由扣子编程 CLI 创建。
 
-## 🌟 网站特色
+## 快速开始
 
-- **现代化设计**: 使用 Tailwind CSS 和 shadcn/ui 组件库
-- **响应式布局**: 完美适配桌面和移动设备
-- **SEO 优化**: 完整的元数据和搜索引擎优化
-- **快速部署**: 集成 Vercel 自动部署
-
-## 🚀 快速开始
-
-### 本地开发
+### 启动开发服务器
 
 ```bash
-# 安装依赖
-npm install
-
-# 启动开发服务器
-npm run dev
+coze dev
 ```
 
-启动后，在浏览器中打开 [http://localhost:3000](http://localhost:3000) 查看网站。
+启动后，在浏览器中打开 [http://localhost:5000](http://localhost:5000) 查看应用。
 
-### 生产构建
+开发服务器支持热更新，修改代码后页面会自动刷新。
+
+### 构建生产版本
 
 ```bash
-# 构建生产版本
-npm run build
-
-# 启动生产服务器
-npm run start
+coze build
 ```
 
-## 📁 项目结构
+### 启动生产服务器
+
+```bash
+coze start
+```
+
+## 项目结构
 
 ```
 src/
-├── app/                      # Next.js App Router
+├── app/                      # Next.js App Router 目录
 │   ├── layout.tsx           # 根布局组件
 │   ├── page.tsx             # 首页
-│   ├── globals.css          # 全局样式
-│   └── robots.ts            # SEO 相关
-├── components/              # React 组件
-│   └── ui/                  # shadcn/ui 组件库
-├── config/                  # 配置文件
-├── hooks/                   # 自定义 Hooks
-└── lib/                     # 工具函数
+│   ├── globals.css          # 全局样式（包含 shadcn 主题变量）
+│   └── [route]/             # 其他路由页面
+├── components/              # React 组件目录
+│   └── ui/                  # shadcn/ui 基础组件（优先使用）
+│       ├── button.tsx
+│       ├── card.tsx
+│       └── ...
+├── lib/                     # 工具函数库
+│   └── utils.ts            # cn() 等工具函数
+└── hooks/                   # 自定义 React Hooks（可选）
 
-public/                      # 静态资源
-vercel.json                  # Vercel 部署配置
-```
-
-## 🌐 部署
-
-本项目已配置为在 [Vercel](https://vercel.com) 上自动部署。
-
-### 部署到 Vercel
-
-1. 将代码推送到 GitHub
-2. 在 Vercel 中导入项目
-3. Vercel 会自动检测并配置 Next.js 项目
-4. 部署完成后即可访问
-
-## 📧 联系方式
-
-- **邮箱**: will.wen1996@gmail.com
-- **GitHub**: [willwen1996-cloud](https://github.com/willwen1996-cloud)
-- **网站**: [coconutchick.top](https://coconutchick.top)
-
-## 🛠️ 技术栈
-
-- **框架**: Next.js 16 (App Router)
-- **样式**: Tailwind CSS
-- **组件**: shadcn/ui + Radix UI
-- **字体**: 系统字体栈
-- **部署**: Vercel
-- **版本控制**: Git
-
-## 📄 许可证
-
-本项目仅供个人使用。
+server/
+├── index.ts                 # 自定义服务器入口
+├── tsconfig.json           # Server TypeScript 配置
+└── dist/                    # 编译输出目录（自动生成）
 ```
 
 ## 核心开发规范

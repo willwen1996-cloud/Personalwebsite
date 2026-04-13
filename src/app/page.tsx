@@ -1,11 +1,24 @@
 'use client';
 
 import Image from 'next/image';
-import { ArrowDown, Mail, Github, Linkedin } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowDown, Mail, Github, Linkedin, Copy, Check, Calendar, Tag } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useState } from 'react';
+import { siteConfig } from '@/config/site.config';
 
 export default function Home() {
+  const [copied, setCopied] = useState(false);
+  const email = 'will.wen1996@gmail.com';
+
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -29,9 +42,36 @@ export default function Home() {
             <button onClick={() => scrollToSection('education')} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               教育
             </button>
-            <a href="mailto:will.wen1996@gmail.com" className="text-sm text-background bg-foreground px-4 py-2 rounded-sm hover:bg-foreground/90 transition-colors">
-              联系我
-            </a>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button className="text-sm text-background bg-foreground px-4 py-2 rounded-sm hover:bg-foreground/90 transition-colors">
+                    联系我
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent 
+                  side="bottom" 
+                  className="bg-card border border-border shadow-lg px-4 py-3 rounded-sm"
+                  sideOffset={8}
+                >
+                  <div 
+                    className="flex items-center gap-2 cursor-pointer hover:bg-secondary/50 px-2 py-1 rounded-sm transition-colors"
+                    onClick={copyEmail}
+                  >
+                    <Mail className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-sm text-foreground">{email}</span>
+                    {copied ? (
+                      <Check className="w-4 h-4 text-green-500" />
+                    ) : (
+                      <Copy className="w-4 h-4 text-muted-foreground" />
+                    )}
+                  </div>
+                  {copied && (
+                    <p className="text-xs text-muted-foreground mt-1 text-center">已复制到剪贴板</p>
+                  )}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </nav>
@@ -56,7 +96,7 @@ export default function Home() {
               </div>
               
               <p className="text-lg text-muted-foreground max-w-md leading-relaxed">
-                一位热爱研究与分享的数字世界分析师。专注于企业战略与数字化场景落地，
+                一位热爱研究与分享的数字化领域分析师。专注于企业战略与数字化场景落地，
                 致力于打造丰富而有深度的数字品牌。
               </p>
 
@@ -112,7 +152,7 @@ export default function Home() {
             </div>
             <div className="lg:col-span-8 space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                一名对世界具有好奇心的央企数字化先锋，持续热爱任何有趣的人和事，具有超过5年的数字化战略咨询、to B软件产品实施经验。
+                一名对世界具有好奇心的央企数字化先锋，对任何好玩的产品抱有好奇心，具有超过5年的数字化战略咨询、to B软件产品实施经验。
                 我相信科技能推动实现社会主义现代化理想，并有助于在将来实现共产。
                 我致力于将复杂的社会现象和企业问题转化为精确、有效、前瞻性的解决方案。
               </p>
@@ -166,6 +206,67 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Articles Section */}
+      <section className="py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-16">
+            <p className="text-sm text-muted-foreground tracking-widest uppercase mb-4">{siteConfig.articles.subtitle}</p>
+            <h3 className="text-4xl font-bold text-foreground">{siteConfig.articles.title}</h3>
+            <p className="text-muted-foreground mt-4 max-w-2xl">{siteConfig.articles.description}</p>
+          </div>
+
+          {/* Article Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+            {siteConfig.articles.items.slice(0, 4).map((article, index) => (
+              <Link
+                key={article.id}
+                href={`/articles/${article.id}`}
+                className="group relative aspect-square bg-card border border-border rounded-sm overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                {/* Background Pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5" />
+                
+                {/* Content */}
+                <div className="absolute inset-0 p-6 flex flex-col justify-between">
+                  {/* Top */}
+                  <div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+                      <span className="px-2 py-1 bg-secondary rounded-sm">{article.source}</span>
+                    </div>
+                    <h4 className="text-base font-semibold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                      {article.title}
+                    </h4>
+                    <p className="text-sm text-muted-foreground line-clamp-2 mt-2">
+                      {article.summary}
+                    </p>
+                  </div>
+                  
+                  {/* Bottom */}
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Calendar className="w-3 h-3" />
+                    <span>{article.publishTime}</span>
+                  </div>
+                </div>
+
+                {/* Hover Effect */}
+                <div className="absolute inset-0 border-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity rounded-sm" />
+              </Link>
+            ))}
+          </div>
+
+          {/* View More Button */}
+          <div className="text-right">
+            <Link
+              href="/articles"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-sm hover:bg-foreground/90 transition-colors"
+            >
+              <span>查看更多</span>
+              <ArrowDown className="w-4 h-4 rotate-[-90deg]" />
+            </Link>
           </div>
         </div>
       </section>
@@ -243,6 +344,73 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Vlog Section */}
+      <section className="py-32 bg-secondary/30">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-16">
+            <p className="text-sm text-muted-foreground tracking-widest uppercase mb-4">{siteConfig.vlog.subtitle}</p>
+            <h3 className="text-4xl font-bold text-foreground">{siteConfig.vlog.title}</h3>
+            <p className="text-muted-foreground mt-4 max-w-2xl">{siteConfig.vlog.description}</p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-12">
+            {siteConfig.vlog.items.map((item, index) => (
+              <div
+                key={index}
+                className="group relative w-72 h-96 bg-background rounded-sm overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 cursor-pointer"
+                style={{ transform: `rotate(${item.rotation}deg)` }}
+              >
+                {/* Media */}
+                <div className="absolute inset-0">
+                  {item.type === 'image' && (
+                    <Image
+                      src={item.media}
+                      alt={item.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      sizes="288px"
+                    />
+                  )}
+                  {item.type === 'video' && (
+                    <video
+                      src={item.media}
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    />
+                  )}
+                  {item.type === 'link' && (
+                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                      <span className="text-muted-foreground">链接预览</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <h4 className="text-lg font-bold text-white mb-2">{item.title}</h4>
+                  <p className="text-sm text-white/80">{item.description}</p>
+                </div>
+
+                {/* Play/Link Icon */}
+                {item.type === 'video' && (
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <svg className="w-8 h-8 text-foreground ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section className="py-32">
         <div className="max-w-7xl mx-auto px-6 text-center">
@@ -255,22 +423,12 @@ export default function Home() {
           </p>
           
           <div className="flex items-center justify-center gap-6">
-            <a 
-              href="mailto:will.wen1996@gmail.com" 
-              className="flex items-center gap-2 text-background bg-foreground px-6 py-3 rounded-sm hover:bg-foreground/90 transition-colors"
+            <div 
+              className="flex items-center gap-2 text-background bg-foreground px-6 py-3 rounded-sm"
             >
               <Mail className="w-4 h-4" />
-              <span>发送邮件</span>
-            </a>
-          </div>
-
-          <div className="flex items-center justify-center gap-8 mt-12">
-            <a href="https://github.com/willwen1996-cloud" className="text-muted-foreground hover:text-foreground transition-colors">
-              <Github className="w-5 h-5" />
-            </a>
-            <a href="https://linkedin.com/in/willwen1996" className="text-muted-foreground hover:text-foreground transition-colors">
-              <Linkedin className="w-5 h-5" />
-            </a>
+              <span>will.wen1996@gmail.com</span>
+            </div>
           </div>
         </div>
       </section>
