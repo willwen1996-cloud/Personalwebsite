@@ -31,7 +31,7 @@ export const siteConfig = {
     ],
     
     // 个人照片（可以是 URL 或本地路径 /xxx.jpg）
-    profileImage: "https://coze-coding-project.tos.coze.site/coze_storage_7623680022263496719/image/generate_image_d535a985-3b6d-40bb-8a7c-104bef74d5b6.jpeg?sign=1806563041-a96689a810-0-06fb21ccebdcd055a7c7820ee6cd28dc42e6f043e66eaa3ea6440e77f609b8ba"
+    profileImage: "/profile.jpg"
   },
   
   // ==================== 关于我 ====================
