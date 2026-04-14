@@ -129,7 +129,7 @@ export default function Home() {
             <div className="relative">
               <div className="aspect-[3/4] relative overflow-hidden bg-muted rounded-sm">
                 <Image
-                  src="https://coze-coding-project.tos.coze.site/coze_storage_7623680022263496719/image/will_image_personal.jpg?sign=4897094954-81415f2316-0-ca09db860fcf8a278108b9950469d5b89c0c4ff9c6b6732742686b92edb7d9f7"
+                  src={siteConfig.hero.profileImage || "/profile.jpg"}
                   alt="清蒸椰子鸡"
                   fill
                   className="object-cover grayscale"

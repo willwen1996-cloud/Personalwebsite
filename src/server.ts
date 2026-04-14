@@ -1,10 +1,14 @@
+// This is a standard Next.js project now
+// The custom server is no longer needed
+// Use standard Next.js commands: pnpm dev, pnpm build, pnpm start
+
 import { createServer } from 'http';
 import { parse } from 'url';
 import next from 'next';
 
-const dev = process.env.COZE_PROJECT_ENV !== 'PROD';
-const hostname = process.env.HOSTNAME || 'localhost';
-const port = parseInt(process.env.PORT || '5000', 10);
+const dev = process.env.NODE_ENV !== 'production';
+const hostname = 'localhost';
+const port = parseInt(process.env.PORT || '3000', 10);
 
 // Create Next.js app
 const app = next({ dev, hostname, port });
@@ -27,9 +31,7 @@ app.prepare().then(() => {
   });
   server.listen(port, () => {
     console.log(
-      `> Server listening at http://${hostname}:${port} as ${
-        dev ? 'development' : process.env.COZE_PROJECT_ENV
-      }`,
+      `> Ready on http://${hostname}:${port}`,
     );
   });
 });
