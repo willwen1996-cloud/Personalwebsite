@@ -129,10 +129,10 @@ export default function Home() {
             <div className="relative">
               <div className="aspect-[3/4] relative overflow-hidden bg-muted rounded-sm">
                 <Image
-                  src={siteConfig.hero.profileImage || "/profile.jpg"}
+                  src="/证件照1.jpg"
                   alt="清蒸椰子鸡"
                   fill
-                  className="object-cover grayscale"
+                  className="object-cover"
                   priority
                 />
               </div>
